@@ -63,12 +63,21 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
     _lFrame = (CGRect){ ( CGRectGetWidth( self.frameView.frame) - 320 ) * .5, ( CGRectGetHeight( self.frameView.frame) - 240) * .5, 320, 240 };
     
     [self setCropRect:self.previewImage.size.width > self.previewImage.size.height ? _lFrame : _pFrame];
+    
+    [self cropModeIsOn:YES];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) cropModeIsOn:(BOOL)isOn
+{
+    [self setCropMode:isOn];
+    [self setCropRect:isOn ? _pFrame : _lFrame];
+    [self reset:isOn];
 }
 
 - (void) cropModeAction:(UIButton *)button
@@ -82,7 +91,7 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 - (void) createInterface
 {
     CGFloat viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]) - 64;
-    _cropView = [[DBCameraCropView alloc] initWithFrame:(CGRect){ 0, 64, 320, viewHeight }];
+    _cropView = [[DBCameraCropView alloc] initWithFrame:(CGRect){ 0, 0, 320, viewHeight }];
     [_cropView setHidden:YES];
     [self setFrameView:_cropView];
 }
@@ -131,12 +140,12 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 - (UIView *) navigationBar
 {
     if ( !_navigationBar ) {
-        _navigationBar = [[UIView alloc] initWithFrame:(CGRect){ 0, 0, 320, 64 }];
+        _navigationBar = [[UIView alloc] initWithFrame:(CGRect){ 0, CGRectGetHeight(self.view.frame) - 64, 320, 64 }];
         [_navigationBar setBackgroundColor:[UIColor blackColor]];
         [_navigationBar setUserInteractionEnabled:YES];
         [_navigationBar addSubview:self.useButton];
         [_navigationBar addSubview:self.retakeButton];
-        [_navigationBar addSubview:self.cropButton];
+        // [_navigationBar addSubview:self.cropButton];
     }
     
     return _navigationBar;

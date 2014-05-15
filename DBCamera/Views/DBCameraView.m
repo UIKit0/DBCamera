@@ -77,12 +77,15 @@
     [self addSubview:self.topContainerBar];
     [self addSubview:self.bottomContainerBar];
     
+    /* hide useless buttons
     [self.topContainerBar addSubview:self.cameraButton];
     [self.topContainerBar addSubview:self.flashButton];
     [self.topContainerBar addSubview:self.gridButton];
+    */
+    
+    [self.topContainerBar addSubview:self.closeButton];
     
     [self.bottomContainerBar addSubview:self.triggerButton];
-    [self.bottomContainerBar addSubview:self.closeButton];
     [self.bottomContainerBar addSubview:self.photoLibraryButton];
     
     [self createGesture];
@@ -120,7 +123,7 @@
         [_photoLibraryButton.layer setCornerRadius:4];
         [_photoLibraryButton.layer setBorderWidth:1];
         [_photoLibraryButton.layer setBorderColor:RGBColor(0xffffff, .3).CGColor];
-        [_photoLibraryButton setFrame:(CGRect){ CGRectGetWidth(self.bounds) - 59, CGRectGetMidY(self.bottomContainerBar.bounds) - 22, 44, 44 }];
+        [_photoLibraryButton setFrame:(CGRect){ 15, 17.5f, CGRectGetHeight(self.bottomContainerBar.frame) - 30, CGRectGetHeight(self.bottomContainerBar.frame) - 30 }];
         [_photoLibraryButton addTarget:self action:@selector(libraryAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -148,7 +151,7 @@
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_closeButton setBackgroundColor:[UIColor clearColor]];
         [_closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-        [_closeButton setFrame:(CGRect){ 25,  CGRectGetMidY(self.bottomContainerBar.bounds) - 15, 30, 30 }];
+        [_closeButton setFrame:(CGRect){ 10, 10, 45, 45 }];
         [_closeButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     }
     
